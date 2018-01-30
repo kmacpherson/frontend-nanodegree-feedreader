@@ -66,15 +66,15 @@ $(function() {
        * the CSS to determine how we're performing the
        * hiding/showing of the menu element.
        */
-      it('is hidden on page load', function() {
-        expect(body.classList.contains('menu-hidden')).toBe(true);
-      });
+        it('is hidden on page load', function() {
+          expect(body.classList.contains('menu-hidden')).toBe(true);
+        });
 
-         /* A test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
+       /* A test that ensures the menu changes
+        * visibility when the menu icon is clicked. This test
+        * should have two expectations: does the menu display when
+        * clicked and does it hide when clicked again.
+        */
         it('shows when clicked and hides when clicked again', function() {
           menu.click();
           expect(body.classList.contains('menu-hidden')).toBe(false);
@@ -86,20 +86,39 @@ $(function() {
     /* A test suite named "Initial Entries" */
     describe('Initial Entries', function() {
 
+        beforeEach(function(done) {
+          loadFeed(0, done);
+        });
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+
+         it('should load the initial feed and have an entry', function() {
+           expect(document.querySelector('.entry-link')).toBeDefined();
+         });
+
+
     });
 
     /* A test suite named "New Feed Selection" */
-    describe('New Feed Selection', function() {
-      
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+    describe('Initial Entries', function() {
+      var oldEntry;
+      beforeEach(function (done) {
+        oldEntry = document.querySelector('.entry-link');
+        console.log(oldEntry);
+        loadFeed(1, done);
+      });
+      /* A test that ensures when a new feed is loaded
+       * by the loadFeed function that the content actually changes.
+       * Remember, loadFeed() is asynchronous.
+       */
+       it('should load a new feed', function() {
+         expect(oldEntry).toBeDefined();
+         expect(oldEntry === document.querySelector('.entry-link')).toBe(false);
+       });
     });
+
 }());

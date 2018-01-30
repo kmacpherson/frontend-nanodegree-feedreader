@@ -6,4 +6,4 @@ How to run.
     git clone git@github.com:kmacpherson/frontend-nanodegree-feedreader.git
   From your browser select File - Open, browse to the clone location and select index.html
 
-All tests should run automatically and display at the bottom of the page if wither success or failure.
+All tests should run automatically and display at the bottom of the page if either success or failure.
