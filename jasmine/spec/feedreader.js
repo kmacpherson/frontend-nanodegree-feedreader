@@ -85,11 +85,12 @@ $(function() {
 
     /* A test suite named "Initial Entries" */
     describe('Initial Entries', function() {
-
+        var feedEle;
         beforeEach(function(done) {
+          feedEle = document.querySelector('.feed');
           loadFeed(0, done);
         });
-        /* TODO: Write a test that ensures when the loadFeed
+        /* A test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
          * Remember, loadFeed() is asynchronous so this test will require
@@ -97,27 +98,51 @@ $(function() {
          */
 
          it('should load the initial feed and have an entry', function() {
-           expect(document.querySelector('.entry-link')).toBeDefined();
+           var feedChildren = feedEle.children;
+           var containsEntry = false;
+           for (var i = 0; i < feedChildren.length; i++ ) {
+             if (feedChildren[i].classList.contains('entry-link')) {
+               containsEntry = true;
+               break;
+             }
+           }
+           expect(containsEntry).toBeTruthy();
          });
 
 
     });
 
     /* A test suite named "New Feed Selection" */
-    describe('Initial Entries', function() {
-      var oldEntry;
+    describe('New Feed Selection', function() {
+      var oldFeed, newFeed, ofFC, nfFC;
+
+      /* reload the default feed as the previous tests will load the second feed, this makes it easier to test */
+      beforeAll(function(done) {
+        loadFeed(0);
+        /* The querySelect seems to return and HTMLCollection which is love so cannot compare directly */
+        oldFeed = document.querySelector('.feed');
+        /* Take the first element out of the collection to compare differences */
+        ofFC = oldFeed.firstElementChild;
+        /* console log for debugging to see what is returned as the MDN doesn't refer the querySelector as returning an HTMLCollection */
+//        console.log('oldFeed =' + oldFeed);
+//        console.log(ofFC);
+        done();
+      });
+      /* load the first feed for comparison */
       beforeEach(function (done) {
-        oldEntry = document.querySelector('.entry-link');
-        console.log(oldEntry);
-        loadFeed(1, done);
+        loadFeed(1,done);
       });
       /* A test that ensures when a new feed is loaded
        * by the loadFeed function that the content actually changes.
        * Remember, loadFeed() is asynchronous.
        */
-       it('should load a new feed', function() {
-         expect(oldEntry).toBeDefined();
-         expect(oldEntry === document.querySelector('.entry-link')).toBe(false);
+       it('should load a new feed and should have new content', function() {
+         newFeed = document.querySelector('.feed');
+         nfFC = newFeed.firstElementChild;
+//         console.log('newFeed =' +newFeed);
+//         console.log(nfFC);
+         expect(ofFC).toBeDefined();
+         expect(ofFC === nfFC).toBeFalsy();
        });
     });
 
