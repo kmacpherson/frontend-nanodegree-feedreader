@@ -98,12 +98,9 @@ $(function() {
          */
 
          it('should load the initial feed and have an entry', function() {
-           var containsEntry = false;
-           feedChildren = document.querySelectorAll('.feed .entry-link');
-           if (feedChildren.length > 0) {
-             containsEntry = true;
-           }
-           expect(containsEntry).toBeTruthy();
+
+           feedChildren = document.querySelectorAll('.feed .entry');
+           expect(feedChildren.length).toBeGreaterThan(0);
          });
     });
 
@@ -121,9 +118,8 @@ $(function() {
           /* console log for debugging to see what is returned as the MDN doesn't refer the querySelector as returning an HTMLCollection */
           // console.log(oldFeed);
           // console.log(ofInnerHtml);
-          loadFeed(1);
+          loadFeed(1, done);
         });
-        done();
       });
 
       /* A test that ensures when a new feed is loaded
